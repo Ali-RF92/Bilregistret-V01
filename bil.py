@@ -1,4 +1,5 @@
 import json
+
 class Bilregister:
     def __init__(self, file_name='bilar.json'):
         self.file_name = file_name
@@ -15,56 +16,54 @@ class Bilregister:
                               "mil": bil_obj.mil}
  
         with open(self.file_name, "w") as f:
-            json.dump(bilar, f, indent=4)
+            json.dump(bilar, f, indent=4, ensure_ascii=False) # indent=4, ensure_ascii=False -> informationen ska läsbart och det ska gå att använda bpkstäverna ö, ä, å
  
     def load_bil_info(self):
         try:
             with open(self.file_name, "r") as f:
                 bil_info = json.load(f)
-                for bil_regnummer, info in bil_info.items():
+                for bil_id, info in bil_info.items():
                     bil = Bil(
-                        info["regnummer"], info["märke"], info["modell"],info["år"],info["mil"], bil_regnummer)
-                    self.bilar[bil_regnummer] = bil
+                        info["regnummer"], info["märke"], info["modell"],info["år"],info["mil"], bil_id)
+                    self.bilar[bil_id] = bil
  
-        except:
-            pass
+        except FileNotFoundError:
+            print("Filen hittas inte.")
  
     def skriv_ut_regnummer(self):
-        print("\033[033m--- ALLA BIBAR REGNUMMER \033[0m---")
+        print("\033[033m--- ALLA BIBAR REGNUMMER ---\033[0m")
         for bil in self.bilar.values():
-            print(f"\033[32m{bil.regnummer}\033[0m")
+            print(f"Regnummer :\033[32m{bil.regnummer}\033[0m")
 
-            
- 
     def skriv_ut_märke(self):
-        print("\033[033m--- ALLA BIBAR MÄRKE \033[0m---")
+        print("\033[033m--- ALLA BIBAR MÄRKE ---\033[0m")
         for bil in self.bilar.values():
-            print(f"\033[32m{bil.märke}\033[0m")
+            print(f"Märke: \033[32m{bil.märke}\033[0m")
  
     def skriv_ut_modell(self):
-        print("\033[033m--- ALLA BIBAR MODELL \033[0m---")
+        print("\033[033m--- ALLA BIBAR MODELL ---\033[0m")
         for bil in self.bilar.values():
-           print(f"\033[32m{bil.modell}\033[0m")
+           print(f"Modell: \033[32m{bil.modell}\033[0m")
  
     def skriv_ut_år(self):
-        print("\033[033m--- ALLA BIBAR ÅR \033[0m---")
+        print("\033[033m--- ALLA BIBAR ÅR ---\033[0m")
         for bil in self.bilar.values():
-            print(f"\033[32m{bil.år}\033[0m")
+            print(f"{bil.märke} -> År: \033[32m{bil.år}\033[0m")
  
     def skriv_ut_mil(self):
-        print("\033[033m--- ALLA BIBAR MIL \033[0m---")
+        print("\033[033m--- ALLA BIBAR MIL ---\033[0m")
         for bil in self.bilar.values():
-            print(f"\033[32m{bil.mil}\033[0m")
+            print(f"Mil: \033[32m{bil.mil}\033[0m")
  
     def skriv_ut_bilar(self):
-        print("\033[033m--- ALLA BIBAR INFON \033[0m---")
+        print("\033[033m--- ALLA BIBAR BILAR ---\033[0m")
         for bil in self.bilar.values():
            print(f"\033[35m{bil}\033[0m")
            print("---------------")
  
     def lägg_till_bil(self, bil: "Bil"):
         if bil.bil_id in self.bilar:
-            print(f"\033[31mBilen finns redan!\033[0m")          
+            print("\033[31mOBS!!! Bilen finns redan!033[0m")
         else:
             self.bilar[bil.bil_id] = bil
  
@@ -89,6 +88,7 @@ def main_menu():
     register.load_bil_info()
  
     while True:
+        print("\033[033m------------- MENU -------------\033[0m")
         print("1. Skapa bil")
         print("2. Skriv ut alla regnummer")
         print("3. Skriv ut alla märke")
@@ -98,13 +98,13 @@ def main_menu():
         print("7. Skriv ut alla bilar")
         print("8. Avsluta")
  
-        choice = input("Ange val --> ")
+        choice = input("\n👉  Ange val (1 - 8) --> ")
  
         if choice == "1":
-            regnummer = input("Ange regnummer: ")
+            regnummer = input("\nAnge regnummer (EX ABC 123): ")
             märke = input("Ange märke: ")
             modell= input("Ange modell: ")
-            år = int(input("Ange år: "))
+            år = int(input("Ange år (EX 1990): "))
             mil = int(input("Ange mil: "))
             bil_id = input("Ange bil_id: " )
 
@@ -113,7 +113,7 @@ def main_menu():
             register.save_bil_info()
  
         elif choice == "2":
-            register.skriv_ut_regnummer()
+           register.skriv_ut_regnummer()
  
         elif choice == "3":
             register.skriv_ut_märke()
@@ -123,24 +123,20 @@ def main_menu():
  
         elif choice == "5":
             register.skriv_ut_år()
-            
+
         elif choice == "6":
             register.skriv_ut_mil()
-            
+
         elif choice == "7":
             register.skriv_ut_bilar()
-            
-        elif choice == "8":
-            break
+
         else:
-            print(f"\033[31mERROR: Felaktigt val! välja mellan (1 - 8)\033[0m]")
-            
+            print("\033[031mERROR: Felaktigt val\033[0m")
+            break
  
         
  
  
 if __name__ == "__main__":
     main_menu()
-
  
-
