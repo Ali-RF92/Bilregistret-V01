@@ -1,3 +1,3 @@
 # Bilregistret-V01
 
-# DIDAR, lEILA, OSMAN, ALI
+# DIDAR, LEILA, OSMAN, ALI
