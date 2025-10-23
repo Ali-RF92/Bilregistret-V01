@@ -1,3 +1,3 @@
-# Bilregistret-V01 -< OOP PROJEKTET
+# Bilregistret-V01 -> OOP PROJEKTET
 
 # DIDAR, LEILA, OSMAN, ALI
