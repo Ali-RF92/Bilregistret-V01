@@ -123,10 +123,13 @@ def main_menu():
  
         elif choice == "5":
             register.skriv_ut_år()
+            
         elif choice == "6":
             register.skriv_ut_mil()
+            
         elif choice == "7":
             register.skriv_ut_bilar()
+            
         elif choice == "8":
             break
         else:
@@ -140,3 +143,4 @@ if __name__ == "__main__":
     main_menu()
 
  
+
